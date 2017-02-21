@@ -1,0 +1,38 @@
+<h1><%= @sangse.id %>번글 자세히 보기</h1>
+<div class="container" style="margin-top: 30px;">
+    <div class="form-group">
+        <label for="exampleInputEmail1">제목</label>
+        <div style="border: 1px solid black"><%= @sangse.title1 %></div>
+    </div>
+    <div class="form-group">
+        <label for="exampleTextarea">내용</label>
+        <div style="border: 1px solid black"><%= @sangse.content1 %></div>
+    </div>
+    <div class="form-group">
+        <label for="exampleTextarea">이미지</label>
+        <div style="border: 1px solid black"><img src="<%= @sangse.image.url %>"/></div>
+    </div>
+    <div class="form-group">
+        <label for="exampleTextarea">댓글</label>
+        <% begin %>
+            <% @sangse.replies.each do |r| %>
+                <div>내용: <%= r.content %><br/>작성시간: <%= r.created_at %><br/><hr/></div>
+            <% end %>
+        <% rescue %>
+        <% end %>
+    </div>
+    <form action="/reply/<%= @sangse.id %>" method="POST">
+        <div class="form-group">
+            <input type="hidden" name="gull_id" value="<%= @sangse.id %>"/>
+            <textarea name="content" class="form-control" id="exampleTextarea" rows="2"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">댓글쓰기</button>
+    </form>
+    <br/>
+    <hr/>
+    <button type="button" class="btn btn-primary" onclick="location.href='/'">돌아가기</button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" class="btn btn-warning" onclick="location.href='/fix/<%= @sangse.id %>'">수정</button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" class="btn btn-danger" onclick="location.href='/destroy/<%= @sangse.id %>'">삭제</button>
+</div>
